@@ -1,0 +1,21 @@
+{
+    "name": "waxed/waxed",
+    "description": "Advanced views with mustache.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Waxed\\Waxed\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Waxed"
+        }
+    ],
+    "require": {
+      "matthiasmullie/minify":"^1.3.1",
+      "mustache/mustache": "^2.14",
+      "scssphp/scssphp": "^1.11.1"
+    }
+}
