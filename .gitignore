@@ -1,4 +1,7 @@
 
+src/php/*.phpcommented.php
+src/php/Setters/*.phpcommented.php
+src/php/Uploaders/*.phpcommented.php
 src/pkg/*
 !src/pkg/base/*
 !src/pkg/boilerplate/*
@@ -9,6 +12,4 @@ src/pkg/*
 !src/pkg/boilerplate.sh
 !src/pkg/download.sh
 !src/pkg/waxed.json
-src/php/*.phpcommented.php
-src/php/Setters/*.phpcommented.php
-src/php/Uploaders/*.phpcommented.php
+
