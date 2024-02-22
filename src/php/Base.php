@@ -1,5 +1,5 @@
 <?php
-namespace JasterStary\Waxed\php;
+namespace Waxedphp\Waxedphp\php;
 
 //require "Functions.php";
 /**
@@ -482,23 +482,23 @@ class Base {
   function setter(string $name): ?object {
       switch($name){
         case 'AceEditor':
-          return new \JasterStary\Waxed\php\Setters\AceEditor($this);
+          return new \Waxedphp\Waxedphp\php\Setters\AceEditor($this);
         case 'Asteroids':
-          return new \JasterStary\Waxed\php\Setters\Asteroids($this);
+          return new \Waxedphp\Waxedphp\php\Setters\Asteroids($this);
         case 'Tabulator':
-          return new \JasterStary\Waxed\php\Setters\Tabulator($this);
+          return new \Waxedphp\Waxedphp\php\Setters\Tabulator($this);
         //case 'SlimSelect':
-          //return new \JasterStary\Waxed\php\Setters\SlimSelect($this);
+          //return new \Waxedphp\Waxedphp\php\Setters\SlimSelect($this);
         case 'PieChart':
-          return new \JasterStary\Waxed\php\Setters\PieChart($this);
+          return new \Waxedphp\Waxedphp\php\Setters\PieChart($this);
         case 'TimeChart':
-          return new \JasterStary\Waxed\php\Setters\TimeChart($this);
+          return new \Waxedphp\Waxedphp\php\Setters\TimeChart($this);
         case 'Behaviors':
-          return new \JasterStary\Waxed\php\Setters\Behaviors($this);
+          return new \Waxedphp\Waxedphp\php\Setters\Behaviors($this);
         case 'Paging':
-          return new \JasterStary\Waxed\php\Setters\Paging($this);
+          return new \Waxedphp\Waxedphp\php\Setters\Paging($this);
         case 'Dropzone':
-          return new \JasterStary\Waxed\php\Setters\Dropzone($this);
+          return new \Waxedphp\Waxedphp\php\Setters\Dropzone($this);
       }
       return $this->plugin->get_setter(strtolower($name));
       //return null;

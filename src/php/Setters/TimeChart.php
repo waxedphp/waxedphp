@@ -1,5 +1,5 @@
 <?php
-namespace JasterStary\Waxed\php\Setters;
+namespace Waxedphp\Waxedphp\php\Setters;
 
 class TimeChart extends AbstractSetter {
 

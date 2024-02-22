@@ -1,5 +1,5 @@
 <?php
-namespace JasterStary\Waxed\php;
+namespace Waxed\Waxed\php;
 
 function str_last_replace($search, $replace, $subject) {
   $pos = strrpos($subject, $search);

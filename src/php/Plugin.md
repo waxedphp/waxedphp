@@ -1,4 +1,4 @@
-# Class Waxed/Plugin
+# Class Waxedphp/Plugin
 
 
 

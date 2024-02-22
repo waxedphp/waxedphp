@@ -1,5 +1,5 @@
 <?php
-namespace JasterStary\Waxed\php\Exceptions;
+namespace Waxedphp\Waxedphp\php\Exceptions;
 /**
  * Define a custom exception class
  */

@@ -1,9 +1,9 @@
 <?php
-namespace JasterStary\Waxed\php;
+namespace Waxedphp\Waxedphp\php;
 
 class AndroidJs{
 
-  private \JasterStary\Waxed\php\Base $waxed;
+  private \Waxedphp\Waxedphp\php\Base $waxed;
   private array $behaviors = [];
   private string $projectRoot = '';
 
@@ -37,9 +37,9 @@ class AndroidJs{
   /**
   * constructor
   *
-  * @param JasterStary\Waxed\php\Base $waxed
+  * @param Waxedphp\Waxedphp\php\Base $waxed
   */
-  function __construct(\JasterStary\Waxed\php\Base $waxed) {
+  function __construct(\Waxedphp\Waxedphp\php\Base $waxed) {
     $this->waxed = $waxed;
     $this->waxed->setup([
       'design_route' => '',

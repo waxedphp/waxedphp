@@ -1,5 +1,5 @@
 <?php
-namespace JasterStary\Waxed\php\Reactions;
+namespace Waxedphp\Waxedphp\php\Reactions;
 
 class LoadPlugins extends AbstractReaction {
   /**

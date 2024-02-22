@@ -1,5 +1,5 @@
 <?php
-namespace JasterStary\Waxed\php;
+namespace Waxed\Waxed\php;
 
 
 class Image {
@@ -10,10 +10,10 @@ class Image {
     $access_granted = true;
     if ($access_granted) {
       if ($fp = fopen($path, "rb")) {
-        $size = filesize($path); 
+        $size = filesize($path);
         $length = $size;
-        $start = 0;  
-        $end = $size - 1; 
+        $start = 0;
+        $end = $size - 1;
         header('Content-type: ' . $mime);
         echo file_get_contents($path);
         flush();

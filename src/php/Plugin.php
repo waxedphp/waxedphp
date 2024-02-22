@@ -1,5 +1,5 @@
 <?php
-namespace JasterStary\Waxed\php;
+namespace Waxedphp\Waxedphp\php;
 
 use MatthiasMullie\Minify;
 
@@ -559,7 +559,7 @@ class Plugin {
 
     if (!is_file($f)) return null;
     include_once($f);
-    $className = '\\JasterStary\\Waxed\\php\\Setters\\' . $name . '\\Setter';
+    $className = '\\Waxedphp\\Waxedphp\\php\\Setters\\' . $name . '\\Setter';
     return new $className($this->base);
   }
 

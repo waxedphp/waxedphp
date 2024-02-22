@@ -1,5 +1,5 @@
 <?php
-namespace JasterStary\Waxed\php\Setters;
+namespace Waxedphp\Waxedphp\php\Setters;
 
 class Asteroids extends AbstractSetter {
 
@@ -234,9 +234,9 @@ class Asteroids extends AbstractSetter {
   /**
   * constructor
   *
-  * @param \JasterStary\Waxed\php\Base $base
+  * @param \Waxedphp\Waxedphp\php\Base $base
   */
-  public function __construct(\JasterStary\Waxed\php\Base $base){
+  public function __construct(\Waxedphp\Waxedphp\php\Base $base){
     parent::__construct($base);
     $this->submitUrl = $this->base->getAjaxUrl();
     $this->dictionary['en']=array(

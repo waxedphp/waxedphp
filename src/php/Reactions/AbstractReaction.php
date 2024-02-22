@@ -1,11 +1,11 @@
 <?php
-namespace JasterStary\Waxed\php\Reactions;
+namespace Waxedphp\Waxedphp\php\Reactions;
 
 abstract class AbstractReaction {
   /**
-   * @var \JasterStary\Waxed\php\Base $base
+   * @var \Waxedphp\Waxedphp\php\Base $base
    */
-  protected \JasterStary\Waxed\php\Base $base;
+  protected \Waxedphp\Waxedphp\php\Base $base;
   /**
    * @var ?string $picked
    */
@@ -13,9 +13,9 @@ abstract class AbstractReaction {
   /**
   * constructor
   *
-  * @param \JasterStary\Waxed\php\Base $base
+  * @param \Waxedphp\Waxedphp\php\Base $base
   */
-  function __construct(\JasterStary\Waxed\php\Base $base) {
+  function __construct(\Waxedphp\Waxedphp\php\Base $base) {
     $this->base = $base;
   }
 

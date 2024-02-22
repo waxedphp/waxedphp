@@ -1,5 +1,5 @@
 <?php
-namespace JasterStary\Waxed\php;
+namespace Waxedphp\Waxedphp\php;
 
 class Utils {
 

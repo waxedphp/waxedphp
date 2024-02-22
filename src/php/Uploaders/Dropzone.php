@@ -1,5 +1,5 @@
 <?php
-namespace JasterStary\Waxed\php\Uploaders;
+namespace Waxedphp\Waxedphp\php\Uploaders;
 
 /**
  * Class maintaining chunked uploads from Dropzone plugin.

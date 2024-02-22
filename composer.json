@@ -1,11 +1,11 @@
 {
-    "name": "waxed/waxed",
+    "name": "waxedphp/waxedphp",
     "description": "Advanced views with mustache.",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Waxed\\Waxed\\": "src/"
+            "Waxedphp\\Waxedphp\\": "src/"
         }
     },
     "authors": [

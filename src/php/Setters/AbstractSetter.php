@@ -1,12 +1,12 @@
 <?php
-namespace JasterStary\Waxed\php\Setters;
+namespace Waxedphp\Waxedphp\php\Setters;
 
 class AbstractSetter {
 
   /**
-   * @var \JasterStary\Waxed\php\Base $base
+   * @var \Waxedphp\Waxedphp\php\Base $base
    */
-  protected \JasterStary\Waxed\php\Base $base;
+  protected \Waxedphp\Waxedphp\php\Base $base;
 
   /**
    * allowed options
@@ -18,9 +18,9 @@ class AbstractSetter {
   /**
   * constructor
   *
-  * @param \JasterStary\Waxed\php\Base $base
+  * @param \Waxedphp\Waxedphp\php\Base $base
   */
-  public function __construct(\JasterStary\Waxed\php\Base $base){
+  public function __construct(\Waxedphp\Waxedphp\php\Base $base){
     $this->base = &$base;
   }
 
