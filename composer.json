@@ -1,6 +1,5 @@
 {
     "name": "waxedphp/waxedphp",
-    "version": "0.2.6",
     "description": "Advanced views with mustache.",
     "type": "library",
     "license": "MIT",
