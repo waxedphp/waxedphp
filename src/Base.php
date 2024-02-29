@@ -119,6 +119,9 @@ class Base {
     if ((isset($cfg['development'])) && (is_string($cfg['development']))) {
       $this->setDevelopment($cfg['development']);
     };
+    if ((isset($cfg['package_path'])) && (is_string($cfg['package_path']))) {
+      $this->plugin->setPackagePath($cfg['package_path']);
+    };
     if ((isset($cfg['writable_path'])) && (is_string($cfg['writable_path']))) {
       $this->plugin->setWritablePath($cfg['writable_path']);
     };
@@ -347,13 +350,16 @@ class Base {
   * @return object
   */
   private function setDevelopment(bool|string $b): object {
-    if  ((is_string($b))&&($b === 'true')) {
+    self::$development = false;
+    if (((is_string($b))&&($b === 'true')) || ((is_bool($b))&&($b)))
+    {
+      if (!class_exists('\Waxedphp\Waxedphpdev\PluginDev')) {
+        throw new \Exception('Development package not installed.');
+      };
       self::$development = true;
-    } else if (is_bool($b)) {
-      self::$development = $b;
     }
     if (self::$development) {
-      $this->plugin = new PluginDev($this);
+      $this->plugin = new \Waxedphp\Waxedphpdev\PluginDev($this);
     }
     return $this;
   }

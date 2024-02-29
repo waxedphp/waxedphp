@@ -1,8 +1,6 @@
 <?php
 namespace Waxedphp\Waxedphp;
 
-use MatthiasMullie\Minify;
-
 class Plugin {
   /**
    * @var Base $base
@@ -59,6 +57,19 @@ class Plugin {
   }
 
   /**
+  * set package path
+  *
+  * @param string $path
+  * @return Plugin
+  */
+  public function setPackagePath(string $path): Plugin {
+    $rpath = realpath($path);
+    if (!$rpath) throw new \Exception('Wrong package path.');
+    $this->packagePath = $rpath . DIRECTORY_SEPARATOR;
+    return $this;
+  }
+
+  /**
   * set writable path
   *
   * @param string $writablePath
@@ -68,7 +79,6 @@ class Plugin {
     $rpath = realpath($writablePath);
     if (!$rpath) throw new \Exception('Wrong writable path.');
     $this->writablePath = $rpath;
-    //print_r($this->writablePath);die();
     return $this;
   }
 
