@@ -2,7 +2,7 @@
 namespace Waxedphp\Waxedphp;
 
 
-class Waxed extends php\Base {
+class Waxed extends Base {
 
   static $_android_js = false;
 
@@ -17,23 +17,23 @@ class Waxed extends php\Base {
   }
 
   public function Image() {
-    return new php\Image();
+    return new Image();
   }
 
   public function Video() {
-    return new php\Video();
+    return new Video();
   }
 
   public function Resumable() {
-    return new php\Resumable();
+    return new Resumable();
   }
 
   public function Utils() {
-    return new php\Utils($this);
+    return new Utils($this);
   }
 
   public function Mustache() {
-    return new php\Mustache($this);
+    return new Mustache($this);
   }
 
   public function dump_debug_info() {
@@ -42,7 +42,7 @@ class Waxed extends php\Base {
 
   public function AndroidJs() {
     if (!self::$_android_js) {
-      self::$_android_js = new php\AndroidJs($this);
+      self::$_android_js = new AndroidJs($this);
     };
     return self::$_android_js;
   }

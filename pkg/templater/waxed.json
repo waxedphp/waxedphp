@@ -1,0 +1,15 @@
+{
+    "name": "templater",
+    "dep": {
+        "js": [
+            "\/js\/jam\/templater\/plugin.js"
+        ],
+        "css": []
+    },
+    "ins": {
+        "js": [],
+        "css": []
+    },
+    "description":"Small mustache template insert.",
+    "license": "MIT license"
+}

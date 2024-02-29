@@ -1,0 +1,6 @@
+
+label.invalid {
+  display:block;
+  clear:both;
+  color:var(--bs-danger);  
+}
