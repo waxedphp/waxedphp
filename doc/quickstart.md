@@ -11,9 +11,12 @@ composer require waxedphp/apexcharts
 
 ```
 
-cd vendor/waxedphp/apexcharts/
+cd vendor/waxedphp/waxedphp/pkg/
 bash install.sh
-
+cd ../../../../
+cd vendor/waxedphp/apexcharts/pkg/
+bash install.sh
+cd ../../../../
 
 ```
 

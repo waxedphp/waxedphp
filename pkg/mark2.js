@@ -681,6 +681,7 @@
       return xtree;
     },
     p: function(value, flags, io) {
+      var s = '';
       if (flags & 16) { //unsafe
         s = (value);
       } else {
