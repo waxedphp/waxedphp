@@ -13,4 +13,4 @@ window._ = _;
 //import "../templaters/mark2/markup.js";
 import "./mark2.js";
 import "./jquery.waxed.js";
-import "../templater/plugin.js";
+import "./plugin.templater.js";

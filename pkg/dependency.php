@@ -8,7 +8,7 @@ return [
     //'/templaters/mark2/markup.js',
     '/base/mark2.js',
     '/base/jquery.waxed.js',
-    '/templater/plugin.js',
+    '/base/plugin.templater.js',
     //'/overlay/loadingoverlay/dist/loadingoverlay.js'
     //'/bs_modal_multi/jquery.bootstrap_modal.js',
     //'/bs_modal_multi/plugin.js',
