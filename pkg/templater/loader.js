@@ -1,2 +1,0 @@
-
-import "./plugin.js";

@@ -4,7 +4,4 @@ src/Exceptions/*.phpcommented.php
 src/Reactions/*.phpcommented.php
 src/Setters/*.phpcommented.php
 src/Uploaders/*.phpcommented.php
-pkg/*
-!pkg/base/
-!pkg/boilerplate/
-!pkg/templater/
+
