@@ -546,5 +546,29 @@ class Base {
     return $this;
   }
 
+  /**
+  * uses
+  *
+  * @param array<string>|string $listing
+  * @return Base
+  */
+  public function uses(array|string $listing): Base {
+    $_uses_ = func_get_args();
+    if (is_array($_uses_[0])) {
+      $_uses_ = $_uses_[0];
+    };
+    $this->plugin->uses($_uses_);
+    return $this;
+  }
+
+  /**
+  * get_plugin
+  *
+  * @return Plugin
+  */
+  public function get_plugin(): Plugin {
+    return clone $this->plugin;
+  }
+
 }
 

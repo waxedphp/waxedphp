@@ -563,13 +563,9 @@ class Plugin {
   */
   public function get_setter(string $name): ?object {
     $f = $this->packagePath.$name;
-    if (!is_dir($f)) return [];
-    //$json = $f . DIRECTORY_SEPARATOR . 'inside.json';
-    $f.= DIRECTORY_SEPARATOR . 'setter.php';
-
-    if (!is_file($f)) return null;
-    include_once($f);
-    $className = '\\Waxedphp\\Waxedphp\\Setters\\' . $name . '\\Setter';
+    if (!is_dir($f)) return null;
+    $className = '\\Waxedphp\\' . ucfirst($name) . '\\Setter';
+    if (!class_exists($className)) return new \Waxedphp\Waxedphp\Setters\AbstractSetter($this->base);
     return new $className($this->base);
   }
 
