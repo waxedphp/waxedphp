@@ -1,0 +1,8 @@
+
+body div.tingle-modal-box {
+  background: var(--bs-body-bg);
+}
+
+body div.tingle-modal-box__footer {
+  background-color: var(--bs-body-bg);
+}

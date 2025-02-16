@@ -1,0 +1,39 @@
+{
+    "name": "quill",
+    "dep": {
+        "js": [
+            "\/quill\/quill\/quill.js",
+            "\/quill\/plugin.js"
+        ],
+        "css": [
+            "\/quill\/quill\/quill.core.css",
+            "\/quill\/quill\/quill.bubble.css",
+            "\/quill\/quill\/quill.snow.css"
+        ]
+    },
+    "ins": {
+        "js": [
+            "\/SunEditor-master\/src\/plugins\/dialog\/",
+            "\/SunEditor-master\/src\/plugins\/modules\/",
+            "\/SunEditor-master\/src\/plugins\/submenu\/"
+        ],
+        "css": [],
+        "eot": [
+            "\/SunEditor-master\/dist\/fonts\/"
+        ],
+        "ttf": [
+            "\/SunEditor-master\/dist\/fonts\/"
+        ],
+        "woff": [
+            "\/SunEditor-master\/dist\/fonts\/"
+        ],
+        "woff2": [
+            "\/SunEditor-master\/dist\/fonts\/"
+        ],
+        "svg": [
+            "\/SunEditor-master\/dist\/fonts\/"
+        ]
+    },
+    "description": "Your powerful rich text editor.",
+    "license": "BSD-3-Clause License"
+}

@@ -1,0 +1,42 @@
+<html>
+  <body>
+    <div id="grepresults1" style="height:60px;overflow:auto;" >
+    LIVE 1:
+    </div>
+
+    <div> footer </div>
+    <script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="../neverending-streaming.js" ></script>
+    <script type="text/javascript" >
+
+    var a = new AjaxNeverendingStreaming('get.php', document.getElementById('grepresults1'), {
+      // These are the default values:
+      tag: 'message', // tag in php response.
+      listLength: 50, // after that length the listing lines start disapear - first in first out.
+      interval: 1000, // interval to parse response without jquery.
+      useJQuery: false, // beter go without jQuery here, as jQuery causes appearing of waiting favicon.
+      prepend: false, // new line should be rather appended or prepended.
+      useJSON: false, // server sends JSON chunks wrapped to xml tag.
+      onMessage: 'draw', // string [draw, log, exec] or function custom function.
+      stopped: false // initially stopped. Could be started with method "resume".
+    });
+
+    // stop after 5 seconds, to see if stop method works:
+    setTimeout(function(){console.log('stop');a.stop();}, 5000);
+
+    // resume after 10 seconds, to see what is resume for:
+    setTimeout(function(){console.log('resume');a.resume();}, 10000);
+
+    // if onMessage is string, other then [draw, log, exec], for example "blue",
+    // we are triggering events, with such name:
+    $('body').on('blue', function(ev){
+      console.log('BLUE', ev);
+    })
+
+    </script>
+  </body>
+</html>

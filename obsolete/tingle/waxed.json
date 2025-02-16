@@ -1,0 +1,15 @@
+{
+    "name": "tingle",
+    "dep": {
+        "js": [
+            "\/tingle\/tingle-master\/dist\/tingle.js",
+            "\/tingle\/plugin.js"
+        ],
+        "css": [
+            "\/tingle\/tingle-master\/dist\/tingle.css"
+        ]
+    },
+    "ins": [],
+    "description":"Dialog window. A minimalist and easy-to-use modal plugin.",
+    "license": "MIT license"
+}

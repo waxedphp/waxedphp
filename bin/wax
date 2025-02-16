@@ -1,0 +1,138 @@
+#!/usr/bin/env php
+<?php
+
+
+error_reporting(E_ALL);
+
+if (version_compare(PHP_VERSION, '5.6') < 0) {
+    die('Requires PHP 5.6 or above');
+}
+include $_composer_autoload_path ?? __DIR__ . '/../vendor/autoload.php';
+#include __DIR__ . '/../scss.inc.php';
+use Waxedphp\Waxedphp\Php\Dependency;
+use Waxedphp\Waxedphp\Php\Config;
+use Waxedphp\Waxedphp\Php\Builders\Webpack;
+
+
+ function rrmdir($dir) { 
+   if (is_dir($dir)) { 
+     $objects = scandir($dir);
+     foreach ($objects as $object) { 
+       if ($object != "." && $object != "..") { 
+         if (is_dir($dir. DIRECTORY_SEPARATOR .$object) && !is_link($dir."/".$object)) {
+           //rrmdir($dir. DIRECTORY_SEPARATOR .$object);
+           //echo($dir. DIRECTORY_SEPARATOR .$object."\n");
+         } else {
+           //unlink($dir. DIRECTORY_SEPARATOR .$object); 
+           echo($dir. DIRECTORY_SEPARATOR .$object."\n");
+         }
+       } 
+     }
+     //rmdir($dir); 
+   } 
+ }
+ 
+
+$cfg = new Config();
+
+for ($i = 1; $i < $argc; $i++) {
+    if ($argv[$i] === '--development') {
+        $cfg->setConfig(['development' => true]);
+        $usesFile = $cfg->getDataDir() . '/uses.json';
+        if (!is_file($usesFile)) {
+          file_put_contents($usesFile, '{}');
+        };
+        chmod($usesFile, 0666);
+        continue;
+    }
+    if ($argv[$i] === '--production') {
+        $cfg->setConfig(['development' => false]);
+        $usesFile = $cfg->getDataDir() . '/uses.json';
+        if (is_file($usesFile)) {
+          chmod($usesFile, 0600);
+        };
+        continue;
+    }
+    if ($argv[$i] === '--chunked') {
+        $cfg->setConfig(['chunked' => true]);
+        continue;
+    }
+    if ($argv[$i] === '--not-chunked') {
+        $cfg->setConfig(['chunked' => false]);
+        continue;
+    }
+    if (strpos($argv[$i],'--design-route=')===0) {
+        $a = explode('=', $argv[$i]);
+        $cfg->setConfig(['design_route' => $a[1]]);
+        continue;
+    }
+    if (strpos($argv[$i],'--action-route=')===0) {
+        $a = explode('=', $argv[$i]);
+        $cfg->setConfig(['action_route' => $a[1]]);
+        continue;
+    }
+    if (strpos($argv[$i],'--plugin-route=')===0) {
+        $a = explode('=', $argv[$i]);
+        $cfg->setConfig(['plugin_route' => $a[1]]);
+        continue;
+    }
+    if (strpos($argv[$i],'--design-path=')===0) {
+        $a = explode('=', $argv[$i]);
+        $cfg->setConfig(['design_path' => $a[1]]);
+        continue;
+    }
+    if (strpos($argv[$i],'--nodejs-path=')===0) {
+        $a = explode('=', $argv[$i]);
+        $cfg->setConfig(['nodejs_path' => $a[1]]);
+        continue;
+    }
+    if (strpos($argv[$i],'--assets-path=')===0) {
+        $a = explode('=', $argv[$i]);
+        $cfg->setConfig(['writable_path' => $a[1]]);
+        continue;
+    }
+    if (strpos($argv[$i],'--vocab-path=')===0) {
+        $a = explode('=', $argv[$i]);
+        $cfg->setConfig(['vocab_path' => $a[1]]);
+        continue;
+    }    
+    if (strpos($argv[$i],'--engine=')===0) {
+        $a = explode('=', $argv[$i]);
+        $cfg->setConfig(['engine' => $a[1]]);
+        continue;
+    }   
+    if ($argv[$i] === '--build') {
+        $a = $cfg->getAllUses();
+        print_r($a);
+        $webpack = new Webpack();
+        foreach ($a as $usage) {
+          $webpack->build($usage);
+        }
+        continue;
+    }
+    if ($argv[$i] === '--clear') {
+        $a = $cfg->getAllUses();
+        $c = $cfg->getConfig();
+        print_r($a);
+        $b = array_values(array_diff(scandir($c['writable_path']), array('..', '.')));
+        
+        foreach ($b as $folder) {
+          if (strpos($folder, 'base-') === 0) {
+            if (!in_array($folder, $a)) {
+              print_r($folder);
+              $f = $c['writable_path'] . '/' . $folder . '/main.js';
+              if (is_file($f)) unlink($f);
+              $f = $c['writable_path'] . '/' . $folder . '/main.css';
+              if (is_file($f)) unlink($f);
+              rrmdir($c['writable_path'] . '/' . $folder);
+              rmdir($c['writable_path'] . '/' . $folder);
+            }
+          }
+          //$webpack->build($usage);
+        }
+        continue;
+    }
+}
+
+$cfg->save();
+print_r($cfg->getConfig());

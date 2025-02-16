@@ -1,0 +1,27 @@
+<?php
+
+return [
+  'js' => [
+    '/SunEditor-master/src/plugins/dialog/',
+    '/SunEditor-master/src/plugins/modules/',
+    '/SunEditor-master/src/plugins/submenu/',
+
+  ],
+  'css' => [
+  ],
+  'eot' => [
+    '/SunEditor-master/dist/fonts/',
+  ],
+  'ttf' => [
+    '/SunEditor-master/dist/fonts/',
+  ],
+  'woff' => [
+    '/SunEditor-master/dist/fonts/',
+  ],
+  'woff2' => [
+    '/SunEditor-master/dist/fonts/',
+  ],
+  'svg' => [
+    '/SunEditor-master/dist/fonts/',
+  ],
+];
