@@ -1,8 +1,0 @@
-/*!
-* tingle.js
-* @author  robin_parisi
-* @version 0.14.0
-* @url
-*/
-
-/*! jQuery v3.5.1 | (c) JS Foundation and other contributors | jquery.org/license */

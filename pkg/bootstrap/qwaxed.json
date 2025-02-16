@@ -1,7 +1,0 @@
-{
-    "name": "bootstrap",
-    "dep": [],
-    "ins": [],
-    "description":"Build fast, responsive sites with Bootstrap.",
-    "license": "MIT License"
-}
