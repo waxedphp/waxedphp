@@ -5,6 +5,15 @@ use Waxedphp\Waxedphp\Php\Config;
 use Waxedphp\Waxedphp\Waxed;
 
 class Webpack {
+  
+/*
+npm install sass-loader sass webpack --save-dev
+npm install postcss postcss-cli autoprefixer
+npm install --save-dev mini-css-extract-plugin
+npm install --save-dev postcss-loader postcss
+npm install --save-dev babel-loader @babel/core
+npm install @babel/preset-env --save-dev
+*/
 
   private ?Config $config = null;
 
@@ -42,7 +51,8 @@ class Webpack {
   
   public function makeConfig():string {
     $f = $this->config->getDataDir() . '/webpack.config.cjs';
-    if (is_file($f)) return $f;
+    $b = $this->config->getDataDir() . '/myBabelPreset';
+    //if (is_file($f)) return $f;
     $cfg = $this->config->getConfig();
     $s = '' . "\n";
     $s.= "const path = require('path');\n";
@@ -77,7 +87,22 @@ class Webpack {
     $s.= "        }, {\n";
     $s.= "          loader: 'sass-loader'\n";
     $s.= "        }]\n";
-    $s.= "      }\n";
+    $s.= "      },\n";
+    
+    $s.= "      {\n";
+    //$s.= '          test: /\.m?js$/,'."\n";
+    $s.= '          test: /\.(?:js|mjs|cjs)$/,'."\n";
+    $s.= "          exclude: /node_modules/,\n";
+    $s.= "          use: {\n";
+    $s.= "            loader: 'babel-loader',\n";
+    $s.= "            options: {\n";
+    $s.= "              targets: 'defaults',\n";//added !!!
+    //$s.= "              presets: ['".$b."' ,'@babel/preset-env']\n";
+    $s.= "              presets: ['@babel/preset-env']\n";
+    $s.= "            }\n";
+    $s.= "          }\n";
+    $s.= "      }\n";  
+    
     $s.= "    ]},\n";
     $s.= "  optimization: {\n";
     $s.= "    minimizer: [new TerserPlugin({\n";
