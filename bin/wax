@@ -1,13 +1,38 @@
 #!/usr/bin/env php
 <?php
 
+function getAutoload($argv){
+  $dir = dirname($argv[0]);
+  while(trim($dir,'/ ')){
+    $dir = dirname($dir);
+    if(is_file($dir . '/autoload.php')){
+      break;
+    }
+    if(basename($dir)=='vendor'){
+      break;
+    }
+    if((is_file($dir . '/composer.json'))&&(basename($dir)!='waxedphp')) {
+      $composerConfig = json_decode(file_get_contents($dir . '/composer.json'), true);
+      if ((isset($composerConfig['config']))&&(isset($composerConfig['config']['vendor-dir']))) {
+        chdir($dir);
+        $dir = realpath($composerConfig['config']['vendor-dir']);
+      };
+      break;
+    }
+  }
+  if ((!$dir)||(!is_dir($dir))) die('Vendor directory not found.');
+  $f = realpath($dir) . '/autoload.php';
+  if (!is_file($f)) die('File "autoload.php" not found. ('.$f.')');
+  return $f;
+}
 
 error_reporting(E_ALL);
 
-if (version_compare(PHP_VERSION, '5.6') < 0) {
-    die('Requires PHP 5.6 or above');
+if (version_compare(PHP_VERSION, '8.0') < 0) {
+    die('Requires PHP 8.0 or above');
 }
-include $_composer_autoload_path ?? __DIR__ . '/../vendor/autoload.php';
+//include $_composer_autoload_path ?? getAutoload($argv);
+include getAutoload($argv);
 #include __DIR__ . '/../scss.inc.php';
 use Waxedphp\Waxedphp\Php\Dependency;
 use Waxedphp\Waxedphp\Php\Config;
@@ -36,6 +61,36 @@ use Waxedphp\Waxedphp\Php\Builders\Webpack;
 $cfg = new Config();
 
 for ($i = 1; $i < $argc; $i++) {
+
+    if ($argv[$i] === '--help') {
+      echo "
+  usage: composer exec \"wax --command\"
+  or: vendor/waxedphp/waxedphp/bin/wax --command
+  
+  commands:
+  --help => show help
+  --install => installs dependencies for main package waxedphp/waxedphp.
+  --install-all => installs dependencies for all packages waxedphp/*
+  --install=PACKAGE => installs dependencies for package waxedphp/PACKAGE
+  --production => switches to production mode
+  --development => switches to development mode
+  --build => builds production assets using webpack (works only in development mode!)
+  --clear => clears unused production assets
+  --chunked => switches to chunked mode (see documentation)
+  --not-chunked => switches off chunked mode
+  --design-route=/html/ => sets design route (route to html templates)
+  --action-route=/{ROUTE}/action/ => sets action route (route to ajax calls)
+  --plugin-route=/{ROUTE}/plugin/ => sets plugin route (route to assets in development mode)
+  --design-path=/var/www/waxedphp.zde/public/html/ => sets filesystem path to html templates
+  --nodejs-path=/var/www/waxedphp.zde/node_modules/ => sets filesystem path to node js modules
+  --assets-path=/var/www/waxedphp.zde/public/assets/ => sets filesystem path to assets in production mode
+  --vocab-path=../app/Language/ => sets filesystem path to language files
+  --engine=mark2 => sets mustache interpreter
+  
+      ";
+      continue;
+    }
+
     if ($argv[$i] === '--development') {
         $cfg->setConfig(['development' => true]);
         $usesFile = $cfg->getDataDir() . '/uses.json';
@@ -132,6 +187,30 @@ for ($i = 1; $i < $argc; $i++) {
         }
         continue;
     }
+    
+    if ($argv[$i] === '--install') {
+      $dep = new Dependency(null, 'waxedphp');
+      $dep->doInstallScript();
+      continue;
+    }
+
+    if ($argv[$i] === '--install-all') {
+      $a = scandir($cfg->getWaxedPhpDir());
+      foreach($a as $name){
+        if (strpos($name,'.')===0) continue;
+        $dep = new Dependency(null, $name);
+        $dep->doInstallScript();
+      }
+      continue;
+    }
+    
+    if (strpos($argv[$i],'--install=')===0) {
+      $a = explode('=', $argv[$i]);
+      $dep = new Dependency(null, $a[1]);
+      $dep->doInstallScript();
+      continue;
+    }
+
 }
 
 $cfg->save();

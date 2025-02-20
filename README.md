@@ -5,6 +5,33 @@ Framework for rapid web frontend development, waxed as mustache.
 ////////////////////////
 ## Quick Start:
 
+```
+
+composer require waxedphp/waxedphp
+
+
+```
+
+
+Inside composer.json - add post-update-cmd, post-package-install, post-package-update, post-package-uninstall commands:
+
+```
+    "scripts": {
+        "test": "phpunit",
+        "post-update-cmd": "Waxedphp\\Waxedphp\\Install::postUpdate",
+        "post-package-install": "Waxedphp\\Waxedphp\\Install::postPackageInstall",
+        "post-package-update": "Waxedphp\\Waxedphp\\Install::postPackageUpdate",
+        "post-package-uninstall": "Waxedphp\\Waxedphp\\Install::postPackageUninstall"
+    }
+```
+
+```
+
+composer exec "wax --development"
+
+
+```
+
 Write config:
 
 ```
