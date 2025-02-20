@@ -37,7 +37,7 @@ npm install @babel/preset-env --save-dev
     $assets = $cfg['writable_path'];
     if (!is_dir($assets)) mkdir($assets);
     if (!is_dir($assets . '/' . $usage)) mkdir($assets . '/' . $usage);
-    $cmd = 'webpack ';
+    $cmd = 'npx webpack ';
     $cmd.= '--progress ';
     $cmd.= '--config "' . $this->makeConfig() . '" ';
     $cmd.= '--entry-reset ';

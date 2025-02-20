@@ -6,3 +6,4 @@ npm install --save-dev mini-css-extract-plugin
 npm install --save-dev postcss-loader postcss
 npm install --save-dev babel-loader @babel/core
 npm install --save-dev @babel/preset-env
+npm install --save-dev webpack
