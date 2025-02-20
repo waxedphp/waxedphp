@@ -1,5 +1,8 @@
 #!/bin/bash
 
+npm install jquery
+npm install lodash
+npm install --save-dev css-loader
 npm install --save-dev sass-loader sass webpack
 npm install --save-dev postcss postcss-cli autoprefixer
 npm install --save-dev mini-css-extract-plugin
