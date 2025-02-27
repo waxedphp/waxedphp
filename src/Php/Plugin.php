@@ -167,6 +167,14 @@ class Plugin {
     if (isset($this->_uses_['base'])) {
       $this->_uses_ = ['base'=>'base']+$this->_uses_;
     }
+    if (isset($this->_uses_['bootstrap'])) {
+      unset($this->_uses_['bootstrap']);
+      $this->_uses_ = $this->_uses_+['bootstrap'=>'bootstrap'];
+    }
+    if (isset($this->_uses_['pico'])) {
+      unset($this->_uses_['pico']);
+      $this->_uses_ = $this->_uses_+['pico'=>'pico'];
+    }
     if (isset($this->_uses_['design'])) {
       unset($this->_uses_['design']);
       $this->_uses_ = $this->_uses_+['design'=>'design'];
@@ -410,6 +418,7 @@ class Plugin {
   */
   public function get_list(): array {
     $a = [];
+    /*
     $aa = scandir($this->packagePath);
     if (!$aa) {
       throw new \Exception('Wrong package path.');
@@ -418,17 +427,25 @@ class Plugin {
       $b = $this->get_dependency($p);
       if (!empty($b)) $a[$p] = [
         'title' => $p,
-        //'dependency' => $b
+        //'documentation' => $b->get_documentation(),
       ];
-      /*
-      if (($p[0] != '.') && (is_dir($this->packagePath . $p)) && (is_file($this->packagePath . $p. '/waxed.json'))) {
-        $a[$p] = ['name' => $p];
-        if (is_file($this->packagePath . $p . '/waxed.json')) {
-          $a[$p] = json_decode(file_get_contents($this->packagePath . $p . '/waxed.json'));
-        };
-      };
-      */
     };
+    */
+    $cfg = new Config();
+    $aa = scandir($cfg->getWaxedPhpDir());
+    foreach ($aa as $p) {
+      $b = $this->get_dependency($p);
+      if (!empty($b)) $a[$p] = [
+        'title' => $p,
+        //'documentation' => $b->get_documentation(),
+      ];
+    };
+    /*
+    $a['waxedphp'] = [
+      'title' => 'waxedphp'
+    ];
+    */
+    ksort($a);    
     return array_values($a);
   }
 

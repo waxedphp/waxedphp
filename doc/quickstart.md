@@ -1,122 +1,151 @@
 
+////////////////////////
+## Quick Start:
+
 ```
 
 composer require waxedphp/waxedphp
-composer require --dev waxedphp/waxedphpdev
-composer require waxedphp/jsonviewer
-composer require waxedphp/apexcharts
-
-
-```
-
-```
-
-cd vendor/waxedphp/waxedphp/pkg/
-bash install.sh
-cd ../../../../
-cd vendor/waxedphp/apexcharts/pkg/
-bash install.sh
-cd ../../../../
-
-```
-
-
-
-```
-
-WAXED.development=true
-WAXED.writable_path='../waxed/assets/'
-WAXED.package_path='../waxed/packages/'
-WAXED.plugin_route='/plugins/'
-
-WAXED.action_route='/ajax'
-WAXED.design_route='/html/'
-WAXED.design_path='html'
-
-WAXED.nodejs_path='../node_modules/'
 
 
 ```
 
 
-## LARAVEL:
+Inside composer.json - add post-update-cmd, post-package-install, post-package-update, post-package-uninstall commands:
 
-
-create app/Providers/WaxedServiceProvider.php :
+```
+    "scripts": {
+        "test": "phpunit",
+        "post-update-cmd": "Waxedphp\\Waxedphp\\Install::postUpdate",
+        "post-package-install": "Waxedphp\\Waxedphp\\Install::postPackageInstall",
+        "post-package-update": "Waxedphp\\Waxedphp\\Install::postPackageUpdate",
+        "post-package-uninstall": "Waxedphp\\Waxedphp\\Install::postPackageUninstall"
+    }
+```
 
 ```
 
-<?php
+composer exec "wax --development"
 
-namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Support\DeferrableProvider;
-use \Waxedphp\Waxedphp\Waxed as Waxed;
+```
 
-/**
- * After changing singleton class, run:
- * composer dumpauto
- *
- */
+Write config:
 
-class WaxedServiceProvider extends ServiceProvider implements DeferrableProvider
+```
+  "waxed": {
+    "chunked": true,
+    "engine": "mark2",
+    "design_route": "/waxed/design/",
+    "design_path": "/var/www/public/views",
+    "plugin_route": "/waxed/plugin/"
+  }
+
+```
+
+Prepare service controller:
+```
+
+class WaxedController extends ControllerBase
 {
-    /**
-     * Register services.
-     */
-    public function register(): void
+    public function beforeExecuteRoute()
     {
-        $this->app->singleton(Waxed::class, function (Application $app) {
-            $waxed = new Waxed();
-            $cfg = [
-                'action_route' => '/ajax',
-                'plugin_route' => '/plugins/',
-                'design_route' => '/html/',
-                'design_path' => 'html',
-                'writable_path' => '../waxed/assets/',
-                'package_path' => '../waxed/packages/',
-                'development' => false,
-                'nodejs_path' => false,
-            ];
-            foreach ($cfg as $key => $val) {
-              $cfg[$key] = env('WAXED.' . $key, $val);
-            };
-            $waxed->setup($cfg);
-            return $waxed;
-        });
+      $conf = DI::getDefault()->get('config');
+      $this->waxed = new \Waxed();
+      $this->waxed->setup($conf->waxed);
     }
 
-    /**
-     * Bootstrap services.
-     */
-    public function boot(): void
+    public function pluginAction()
     {
-        //
+      $a = implode('/', func_get_args());
+      $this->waxed->plugin->dispatch($a);
     }
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array<int, string>
-     */
-    public function provides(): array
+    public function designAction()
     {
-        return [Waxed::class];
+      $a = implode('/', func_get_args());
+      $this->waxed->design->dispatch($a);
     }
 
 }
 
 ```
 
-into config/app.php add:
+Prepare main application controller:
 ```
 
-    'providers' => ServiceProvider::defaultProviders()->merge([
-        ...
-        App\Providers\WaxedServiceProvider::class,
-    ])->toArray(),
+  public function indexAction() {
+
+    $this->waxed->pick('main')->display([
+
+    ], 'hello');
+
+    $this->waxed->view('main', 'index');
+  }
+
 
 ```
+
+Prepare controller method for ajax requests:
+```
+
+  public function ajaxAction() {
+    switch ($_POST['action']) {
+      case 'dialog/login':
+        $this->waxed->pick('main')->dialog([
+
+        ], 'login');
+        break;
+      case 'login/sent':
+        try {
+          $this->USER_MODEL->login($_POST['login'], $_POST['password']);
+        catch (Exception $e) {
+          $this->waxed->pick('dialog')->invalidate($e)->flush();
+          exit;
+        }
+        $this->waxed->reload();
+      break;
+      default:
+        $this->waxed->pick('main')->display([
+
+        ], 'hello');
+        break;
+    }
+    $this->waxed->flush();
+  }
+
+
+```
+
+Prepare HTML templates:
+
+```
+<!-- hello.html -->
+<h1>Hello!</h1>
+<p>
+  Dont you want to
+  <a class="waxed-action" data-action="dialog/login" href="{{route}}" >log in</a>
+  ?
+</p>
+
+```
+
+
+```
+<!-- login.html -->
+<form method="post" action="{{route}}" >
+  <label>login:</label>
+  <input type="text" name="login" />
+  <label>password:</label>
+  <input type="password" name="password" />
+  <input type="hidden" name="action" value="login/sent" />
+  <input type="submit" value="OK" >
+</form>
+
+
+```
+
+
+Done!
+
+////////////////////////
 

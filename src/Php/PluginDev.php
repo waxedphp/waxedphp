@@ -62,6 +62,14 @@ class PluginDev extends Plugin {
     if (isset($this->_uses_['base'])) {
       $this->_uses_ = ['base'=>'base']+$this->_uses_;
     }
+    if (isset($this->_uses_['bootstrap'])) {
+      unset($this->_uses_['bootstrap']);
+      $this->_uses_ = $this->_uses_+['bootstrap'=>'bootstrap'];
+    }
+    if (isset($this->_uses_['pico'])) {
+      unset($this->_uses_['pico']);
+      $this->_uses_ = $this->_uses_+['pico'=>'pico'];
+    }
     if (isset($this->_uses_['design'])) {
       unset($this->_uses_['design']);
       $this->_uses_ = $this->_uses_+['design'=>'design'];

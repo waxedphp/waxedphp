@@ -1,6 +1,11 @@
-# Waxed base
+# Waxedphp
 
+Framework for rapid web frontend development, waxed as mustache.
 
+Is a toolbox which allows PHP developer to easily prototype rich interactive web applications without too much fiddling with javascript and css.
+Contains curated and growing collection of frontend solutions for many typical scenarios - all driven from PHP code.
+
+MIT License
 ---
 
 ### PHP:
