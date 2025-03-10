@@ -74,7 +74,9 @@ for ($i = 1; $i < $argc; $i++) {
   --install=PACKAGE => installs dependencies for package waxedphp/PACKAGE
   --production => switches to production mode
   --development => switches to development mode
-  --build => builds production assets using webpack (works only in development mode!)
+  --list => lists assets to compile
+  --compile => compile production assets using webpack (works only in development mode!)
+  --compile=12 => compile only one production asset from list.
   --clear => clears unused production assets
   --chunked => switches to chunked mode (see documentation)
   --not-chunked => switches off chunked mode
@@ -156,13 +158,27 @@ for ($i = 1; $i < $argc; $i++) {
         $cfg->setConfig(['engine' => $a[1]]);
         continue;
     }   
-    if ($argv[$i] === '--build') {
+    if ($argv[$i] === '--list') {
+        $a = $cfg->getAllUses();
+        print_r($a);
+        continue;
+    }
+    if ($argv[$i] === '--compile') {
         $a = $cfg->getAllUses();
         print_r($a);
         $webpack = new Webpack();
         foreach ($a as $usage) {
           $webpack->build($usage);
         }
+        continue;
+    }
+    if (strpos($argv[$i],'--compile=')===0) {
+        $a = explode('=', $argv[$i]);
+        $n = intval($a[1]);
+        $b = $cfg->getAllUses();
+        print_r($b[$n]);
+        $webpack = new Webpack();
+        $webpack->build($b[$n]);
         continue;
     }
     if ($argv[$i] === '--clear') {

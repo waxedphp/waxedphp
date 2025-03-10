@@ -43,7 +43,8 @@
 
     _dot: function(str, arr, idx) {
       if (typeof idx == 'number') {
-        idx = '[' + idx + ']';
+        //idx = '[' + idx + ']';
+        idx = '.' + idx + '';
       } else {
         idx = '';
       }
@@ -627,16 +628,17 @@
 
 
           } else if (key.match(/^(\@|\$|\!)/)) {
-
+            //console.log(io);
             switch (key) {
               case '$':
               case '@index':
-                if (io.mark._isScalar(io._index_)) return io._index;
+              case '@id':
+                if (io.mark._isScalar(io._index_)) return String(io._index_);
                 return false;
                 break;
               case '$$':
               case '@idx':
-                if (io.mark._isScalar(io._index_)) return io._index_ + 1;
+                if (io.mark._isScalar(io._index_)) return String(io._index_ + 1);
                 return false;
                 break;
               case '@length':
@@ -648,6 +650,10 @@
                 break;
               case '@path':
                 if (io.mark._isScalar(io._path_)) return io._path_;
+                return false;
+                break;
+              case '@parts':
+                return 'parts';
                 return false;
                 break;
               case '@time':
