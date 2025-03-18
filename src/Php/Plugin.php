@@ -41,6 +41,8 @@ class Plugin {
    * @var string $route
    */
   protected string $route = '/include/';
+  
+  protected string $assetsRoute = '/assets/';
 
   protected mixed $cache = false;
   
@@ -77,6 +79,19 @@ class Plugin {
     //print_r($this->writablePath);die();
     return $this;
   }
+
+  /**
+  * set assets route
+  *
+  * @param string $route
+  * @return Plugin
+  */
+  public function setAssetsRoute(string $route): Plugin {
+    //print_r($route);
+    $this->assetsRoute = $route;
+    return $this;
+  }
+
 
   /**
   * set plugin route
@@ -275,7 +290,7 @@ class Plugin {
     switch ($this->mode) {
       case 'html': //$this->route .
         $s.='<script type="text/javascript" src="';
-        $s.='/assets/';
+        $s.=$this->assetsRoute;
         $s.=implode('-', $this->_uses_);
         $s.='/main.js';
         if ($this->_nocache()) {
@@ -303,7 +318,7 @@ class Plugin {
     switch ($this->mode) {
       case 'html'://$this->route .
         $s .= '<link rel="stylesheet" type="text/css" href="';
-        $s.='/assets/';
+        $s.=$this->assetsRoute;
         $s .= implode('-', $this->_uses_);
         $s .= '/main.css?';
         //$s .= $this->base->design->getStyleQuery();

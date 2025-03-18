@@ -13,6 +13,8 @@ class Config {
   
   private string $design_route = "/html/";
   
+  private string $assets_route = "/assets/";
+  
   private string $action_route = "/{ROUTE}/action";
   
   private string $plugin_route = "/{ROUTE}/plugin/";
@@ -38,6 +40,7 @@ class Config {
       "design_route",
       "action_route",
       "plugin_route",
+      "assets_route",
       "design_path",
       "nodejs_path",
       "vendor_path",

@@ -144,6 +144,9 @@ class Base {
     if ((isset($cfg['plugin_route'])) && (is_string($cfg['plugin_route']))) {
       $this->setPluginRoute($cfg['plugin_route']);
     };
+    if ((isset($cfg['assets_route'])) && (is_string($cfg['assets_route']))) {
+      $this->setAssetsRoute($cfg['assets_route']);
+    };
     if ((isset($cfg['action_route'])) && (is_string($cfg['action_route']))) {
       $this->setActionRoute($cfg['action_route']);
     };
@@ -300,6 +303,22 @@ class Base {
       ]);
     }
     $this->plugin->setPluginRoute($route);
+    return $this;
+  }
+
+  /**
+  * method setAssetsRoute
+  *
+  * @param string $route
+  * @return object
+  */
+  private function setAssetsRoute(string $route): object {
+    if (isset($this->_route)) {
+      $route = static::replaceVariablesInTemplate($route, [
+        'ROUTE' => $this->_route,
+      ]);
+    }
+    $this->plugin->setAssetsRoute($route);
     return $this;
   }
 
