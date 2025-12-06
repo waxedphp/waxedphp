@@ -874,7 +874,7 @@
           o.invalidate(RECORD);
         });
       };
-
+      /*
       for(var x in RECORD){
         //console.log(x);
         $(elements.main).find('input[name='+x+']').each(function(i,element){
@@ -928,6 +928,7 @@
         });
 
       };
+      */
 
     },
 
@@ -1409,8 +1410,8 @@
         delete this.behaviors[on];
       } else {
         if (typeof opt == 'string') {
-          //this.behaviors[on] = Function('var opt=arguments[0];' + opt);
-          this.behaviors[on] = Function(opt)();
+          this.behaviors[on] = Function('var API=arguments[0];return function(){' + opt + ';}')(this.api());
+          //this.behaviors[on] = Function(opt)();
         } else {
           this.behaviors[on] = opt;
         }
@@ -2481,6 +2482,9 @@
         },
         'getRoute': function(name, resource) {
           return that._routes[name]+resource;
+        },
+        'dump': function() {
+          console.log(that.behaviors);
         }
       };
     },

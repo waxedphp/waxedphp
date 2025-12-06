@@ -569,7 +569,7 @@ class Base {
     }
     $availableReactions = ['display','append','dialog','dialogClose',
     'invalidate', 'update', 'inspire',
-    'load', 'reload', 'redirect', 'scrollTop',
+    'load', 'reload', 'redirect', 'scrollTop', 'scrollTo',
     'show', 'hide', 'title', 'behave', 'sendRaw',
     'loadTemplate', 'loadPlugins', 'hashState'];
     if (in_array($name, $availableReactions)) {
@@ -586,6 +586,22 @@ class Base {
       return $this;
     }
     return $this;
+  }
+  
+  public function getMustache() {
+    $mustache=new Mustache($this);
+    return $mustache;
+  }
+  
+  public function getTemplate(array|string $template) {
+    $t = '';
+    if (is_array($template)){
+      if (isset($template['htmltext'])) $t = $template['htmltext'];
+      if (isset($template['htmlpath'])) $t = $this->design->mode('html')->route(explode('/',$template['htmlpath']))->GET();
+    } else if (is_string($template)) {
+      $t = $this->design->mode('html')->route(explode('/',$template))->GET();
+    };
+    return $t;
   }
 
 }

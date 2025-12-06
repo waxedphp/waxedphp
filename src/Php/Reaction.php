@@ -448,6 +448,20 @@ class Reaction {
   }
 
   /**
+  * we could scroll page in consequence of ajax calling...
+  *
+  * @param string $name named anchor.
+  * @param int $speed optional delay before action.
+  * @return object
+  */
+  function scrollTo(string $name, int $speed = 0): object {
+    $a = new Reactions\ScrollTo($this->getBase());
+    $a->configure($name, $speed);
+    $this->appendReactions($a);
+    return $this;
+  }
+
+  /**
   * we could redirect browser in consequence of ajax calling...
   *
   * @param string $url URL where to redirect.
@@ -558,7 +572,12 @@ class Reaction {
     if ((is_array($template))&&(isset($template['csstext']))) {
       $t = self::str_last_replace('</head>', "\n".'  <style>' ."\n".$template['csstext']."\n".'  </style>'."\n".'</head>', $t);
     };
-    $t = self::str_last_replace('</body>', $s . '</body>', $t);
+    $pos = strrpos($t, '<!--[WAXED-SCRIPT]-->');
+    if($pos !== false) {
+      $t = self::str_last_replace('<!--[WAXED-SCRIPT]-->', $s, $t);
+    } else {
+      $t = self::str_last_replace('</body>', $s . '</body>', $t);
+    }
     return $t;
   }
   
