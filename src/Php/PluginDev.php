@@ -717,5 +717,25 @@ class PluginDev extends Plugin {
     }
     return implode('/', $relPath);
   }
+  
+  /**
+  * get_inside
+  *
+  * @param string $name
+  * @return array<mixed>
+  */
+  public function get_inside(string $name): array {
+    $f = $this->packagePath.$name;
+    if (!is_dir($f)) return [];
+    //$json = $f . DIRECTORY_SEPARATOR . 'inside.json';
+    $f.= DIRECTORY_SEPARATOR . 'inside.php';
+
+    if (!is_file($f)) return [];
+    $waxed = $this->base;
+    if (!defined("NODE")) define("NODE", $this->getNodeJSPath());
+    if (!defined("DESIGN")) define("DESIGN", $this->base->design->getDesignPath());
+    $a = include($f);
+    return $a;
+  }
 
 }

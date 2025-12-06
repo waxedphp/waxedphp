@@ -130,10 +130,11 @@ class Plugin {
   * @return Plugin
   */
   public function setNodeJsPath(string $nodeJsPath): Plugin {
+    /* no node JS path is needed in prod!
     $rpath = realpath($nodeJsPath);
     if (!$rpath) throw new \Exception('Wrong NODE JS path.');
     $this->nodeJsPath = $rpath;
-
+    */
     return $this;
   }
   
@@ -605,6 +606,7 @@ class Plugin {
   * @return array<mixed>
   */
   public function get_inside(string $name): array {
+    die('inside');
     $f = $this->packagePath.$name;
     if (!is_dir($f)) return [];
     //$json = $f . DIRECTORY_SEPARATOR . 'inside.json';
