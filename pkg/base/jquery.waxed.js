@@ -1046,11 +1046,13 @@
        */
       $(elements.main).find('a.action, button.action,a.waxed-action, button.waxed-action').off().on('click', function(ev){
         var data=$(ev.currentTarget).data();
+        
         if(typeof(data.action)=='undefined'){
           return true;
         };
         ev.preventDefault();
         var url = $(ev.currentTarget).attr('href');
+        console.log('INIT TEMPLATE',url,data);
         //console.log('click', url, typeof(url));
         if((typeof(url)=='undefined')||(url=='')){
           if(typeof(data.action)!='undefined'){
