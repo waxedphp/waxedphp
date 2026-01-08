@@ -1052,7 +1052,7 @@
         };
         ev.preventDefault();
         var url = $(ev.currentTarget).attr('href');
-        console.log('INIT TEMPLATE',url,data);
+        //console.log('INIT TEMPLATE',url,data);
         //console.log('click', url, typeof(url));
         if((typeof(url)=='undefined')||(url=='')){
           if(typeof(data.action)!='undefined'){
