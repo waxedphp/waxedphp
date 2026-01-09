@@ -10,7 +10,11 @@ class Redirect extends AbstractReaction {
    * @var ?int $onTime
    */
   private ?int $onTime = null;
-
+  /**
+   * @var ?bool $hard
+   */
+  private ?bool $hard = null;
+  
   /**
   * to array
   *
@@ -24,12 +28,16 @@ class Redirect extends AbstractReaction {
     if($this->onTime>0){
       $a['ontime']=intval($this->onTime);
     };
+    if($this->hard){
+      $a['hard']=true;
+    };
     return $a;
   }
 
-  function configure(string $url, int $onTime = 0): object {
+  function configure(string $url, int $onTime = 0, bool $hard = false): object {
     $this->url = $url;
     $this->onTime = $onTime;
+    $this->hard = $hard;
     return $this;
   }
 

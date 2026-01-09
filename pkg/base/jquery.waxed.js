@@ -2302,7 +2302,11 @@
          */
         case 'gourl':
             if(typeof(opt.url)=='undefined')return this;
-            document.location.replace(opt.url);
+            if((typeof(opt.hard)=='boolean')&&(opt.hard)) {
+              document.location.replace(opt.url);
+            } else {
+              document.location.href=opt.url;
+            }
           break;
 
         /**

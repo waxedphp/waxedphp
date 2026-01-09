@@ -466,11 +466,12 @@ class Reaction {
   *
   * @param string $url URL where to redirect.
   * @param int $onTime
+  * @param bool $hard forget previous location
   * @return object
   */
-  function redirect(string $url, int $onTime = 0): object {
+  function redirect(string $url, int $onTime = 0, bool $hard = false): object {
     $a = new Reactions\Redirect($this->getBase());
-    $a->configure($url, $onTime);
+    $a->configure($url, $onTime, $hard);
     $this->appendReactions($a);
     return $this;
   }
