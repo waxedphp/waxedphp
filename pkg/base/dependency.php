@@ -2,7 +2,7 @@
 return [
   'js' => [
     //'/utils/underscore.js',
-    '/base/jquery-3.5.1.min.js',
+    '/base/jquery-3.7.1.min.js',
     NODE . '/lodash/lodash.js',
     '/templaters/mark2/markup.js',
     '/base/jquery.waxed.js',
