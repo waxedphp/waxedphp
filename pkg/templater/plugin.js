@@ -49,6 +49,17 @@
         }
 
       },
+      
+      this.show = function(template, rec) {
+        var oo = {
+          'action': 'display'
+        };
+        //console.log('ROUTES>>>', that.pluggable._routes);
+        oo.element = that.element;        
+        oo.template = that.pluggable._routes.design + '' + template;
+        oo.RECORD = rec;
+        that.pluggable.trigger(oo);        
+      },
 
 
       this.free = function() {
@@ -56,8 +67,10 @@
       },
 
       this.init=function() {
-
-
+        
+        if (typeof that.dd.template != 'undefined') {
+          //that.show(that.dd.template, {});
+        }
 
         inited = true;
       },

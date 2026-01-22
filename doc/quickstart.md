@@ -74,6 +74,9 @@ Prepare main application controller:
 ```
 
   public function indexAction() {
+  
+    $this->waxed->plugin->uses('base', 'jsonviewer')
+    ->inMethod(__CLASS__, __FUNCTION__);
 
     $this->waxed->pick('main')->display([
 
@@ -123,7 +126,7 @@ Prepare HTML templates:
 <h1>Hello!</h1>
 <p>
   Dont you want to
-  <a class="waxed-action" data-action="dialog/login" href="{{route}}" >log in</a>
+  <a class="waxed-action" data-action="dialog/login" href="{{:ajax}}" >log in</a>
   ?
 </p>
 
