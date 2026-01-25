@@ -81,7 +81,10 @@ class Config {
 
   public function save() {
     if (!is_dir($this->dataDir)) @mkDir($this->dataDir);
-    file_put_contents($this->dataDir . '/config.json', json_encode($this->getConfig(), JSON_PRETTY_PRINT));
+    file_put_contents(
+      $this->dataDir . '/config.json', json_encode($this->getConfig(),
+      JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+    ));
   }
 
   public function setConfig(array $arr) {
