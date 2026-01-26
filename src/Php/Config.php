@@ -66,7 +66,22 @@ class Config {
     $this->design_path = $entryDir . '/html/';
     $this->writable_path = $entryDir . '/assets/';
     $this->nodejs_path = $baseDir . '/node_modules/';
+
+    $cwd = realpath(getcwd());
+    //print_r($cwd);die();
+    /*
+    $this->nodejs_path = $this->getRelativePath($cwd, $this->nodejs_path);
+    $this->writable_path = $this->getRelativePath($cwd, $this->writable_path);
+    $this->design_path = $this->getRelativePath($cwd, $this->design_path);
+    $this->vendor_path = $this->getRelativePath($cwd, $this->vendor_path);
+    */
     $this->save();
+    /*
+    $this->nodejs_path = realpath($this->nodejs_path);
+    $this->writable_path = realpath($this->writable_path);
+    $this->design_path = realpath($this->design_path);
+    $this->vendor_path = realpath($this->vendor_path);
+    */
   }
 
   private function getEntryDir(string $baseDir) {
@@ -93,6 +108,12 @@ class Config {
         $this->$key = $arr[$key];
       }
     }
+    /*
+    $this->nodejs_path = realpath($this->nodejs_path);
+    $this->writable_path = realpath($this->writable_path);
+    $this->design_path = realpath($this->design_path);
+    $this->vendor_path = realpath($this->vendor_path);
+    */
   }
 
   public function getConfig():array {
@@ -122,6 +143,38 @@ class Config {
     }
     ksort($re);
     return array_keys($re);
+  }
+
+  function getRelativePath(string $from, string $to): string {
+    // some compatibility fixes for Windows paths
+    $from = is_dir($from) ? rtrim($from, '\/') . '/' : $from;
+    $to   = is_dir($to)   ? rtrim($to, '\/') . '/'   : $to;
+    $from = str_replace('\\', '/', $from);
+    $to   = str_replace('\\', '/', $to);
+
+    $from     = explode('/', $from);
+    $to       = explode('/', $to);
+    $relPath  = $to;
+
+    foreach($from as $depth => $dir) {
+        // find first non-matching dir
+        if($dir === $to[$depth]) {
+            // ignore this directory
+            array_shift($relPath);
+        } else {
+            // get number of remaining dirs to $from
+            $remaining = count($from) - $depth;
+            if($remaining > 1) {
+                // add traversals up to first matching dir
+                $padLength = (count($relPath) + $remaining - 1) * -1;
+                $relPath = array_pad($relPath, $padLength, '..');
+                break;
+            } else {
+                $relPath[0] = './' . $relPath[0];
+            }
+        }
+    }
+    return implode('/', $relPath);
   }
 
 }

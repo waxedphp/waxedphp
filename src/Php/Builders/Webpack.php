@@ -5,7 +5,7 @@ use Waxedphp\Waxedphp\Php\Config;
 use Waxedphp\Waxedphp\Waxed;
 
 class Webpack {
-  
+
 /*
 npm install sass-loader sass webpack --save-dev
 npm install postcss postcss-cli autoprefixer
@@ -28,11 +28,11 @@ npm install @babel/preset-env --save-dev
     if (!is_dir($assets . '/' . $usage)) mkdir($assets . '/' . $usage);
     chmod($assets . '/' . $usage, 0777);
   }
-  
+
   public function build(string $usage) {
     $waxed = new Waxed();
     $waxed->route('/')->configure()->setDevelopment(true);
-    $waxed->plugin->uses(explode('-', $usage))->prepare_build();    
+    $waxed->plugin->uses(explode('-', $usage))->prepare_build();
     $cfg = $this->config->getConfig();
     $assets = $cfg['writable_path'];
     if (!is_dir($assets)) mkdir($assets);
@@ -48,7 +48,7 @@ npm install @babel/preset-env --save-dev
     unlink($assets . '/' . $usage . '/loader.js');
     print_r($re);
   }
-  
+
   public function makeConfig():string {
     $f = $this->config->getDataDir() . '/webpack.config.cjs';
     $b = $this->config->getDataDir() . '/myBabelPreset';
@@ -88,7 +88,7 @@ npm install @babel/preset-env --save-dev
     $s.= "          loader: 'sass-loader'\n";
     $s.= "        }]\n";
     $s.= "      },\n";
-    
+
     $s.= "      {\n";
     //$s.= '          test: /\.m?js$/,'."\n";
     $s.= '          test: /\.(?:js|mjs|cjs)$/,'."\n";
@@ -101,8 +101,8 @@ npm install @babel/preset-env --save-dev
     $s.= "              presets: ['@babel/preset-env']\n";
     $s.= "            }\n";
     $s.= "          }\n";
-    $s.= "      }\n";  
-    
+    $s.= "      }\n";
+
     $s.= "    ]},\n";
     $s.= "  optimization: {\n";
     $s.= "    minimizer: [new TerserPlugin({\n";
@@ -115,6 +115,7 @@ npm install @babel/preset-env --save-dev
     $s.= "    new webpack.ProvidePlugin({\n";
     $s.= '      $: "jquery",'."\n";
     $s.= '      jQuery: "jquery"'."\n";
+    //$s.= '      "window.jQuery": "jquery"'."\n";
     $s.= "    })\n";
     $s.= "  ]\n";
     $s.= "  };\n";

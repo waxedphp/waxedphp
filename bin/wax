@@ -39,24 +39,29 @@ use Waxedphp\Waxedphp\Php\Config;
 use Waxedphp\Waxedphp\Php\Builders\Webpack;
 
 
- function rrmdir($dir) { 
-   if (is_dir($dir)) { 
+ function rrmdir($dir) {
+   if (is_dir($dir)) {
      $objects = scandir($dir);
-     foreach ($objects as $object) { 
-       if ($object != "." && $object != "..") { 
+     foreach ($objects as $object) {
+       if ($object != "." && $object != "..") {
          if (is_dir($dir. DIRECTORY_SEPARATOR .$object) && !is_link($dir."/".$object)) {
            //rrmdir($dir. DIRECTORY_SEPARATOR .$object);
            //echo($dir. DIRECTORY_SEPARATOR .$object."\n");
          } else {
-           //unlink($dir. DIRECTORY_SEPARATOR .$object); 
+           //unlink($dir. DIRECTORY_SEPARATOR .$object);
            echo($dir. DIRECTORY_SEPARATOR .$object."\n");
          }
-       } 
+       }
      }
-     //rmdir($dir); 
-   } 
+     //rmdir($dir);
+   }
  }
- 
+
+if (is_dir('./public')) {
+  chdir('./public');
+} else {
+  die('Please run in the root directory of framework.'."\n");
+}
 
 $cfg = new Config();
 
@@ -66,7 +71,7 @@ for ($i = 1; $i < $argc; $i++) {
       echo "
   usage: composer exec \"wax --command\"
   or: vendor/waxedphp/waxedphp/bin/wax --command
-  
+
   commands:
   --help => show help
   --install => installs dependencies for main package waxedphp/waxedphp.
@@ -75,6 +80,7 @@ for ($i = 1; $i < $argc; $i++) {
   --production => switches to production mode
   --development => switches to development mode
   --list => lists assets to compile
+  --reset => reset list of assets to compile
   --compile => compile production assets using webpack (works only in development mode!)
   --compile=12 => compile only one production asset from list.
   --clear => clears unused production assets
@@ -88,7 +94,7 @@ for ($i = 1; $i < $argc; $i++) {
   --assets-path=/var/www/waxedphp.zde/public/assets/ => sets filesystem path to assets in production mode
   --vocab-path=../app/Language/ => sets filesystem path to language files
   --engine=mark2 => sets mustache interpreter
-  
+
       ";
       continue;
     }
@@ -152,12 +158,12 @@ for ($i = 1; $i < $argc; $i++) {
         $a = explode('=', $argv[$i]);
         $cfg->setConfig(['vocab_path' => $a[1]]);
         continue;
-    }    
+    }
     if (strpos($argv[$i],'--engine=')===0) {
         $a = explode('=', $argv[$i]);
         $cfg->setConfig(['engine' => $a[1]]);
         continue;
-    }   
+    }
     if ($argv[$i] === '--list') {
         $a = $cfg->getAllUses();
         print_r($a);
@@ -186,7 +192,7 @@ for ($i = 1; $i < $argc; $i++) {
         $c = $cfg->getConfig();
         print_r($a);
         $b = array_values(array_diff(scandir($c['writable_path']), array('..', '.')));
-        
+
         foreach ($b as $folder) {
           if (strpos($folder, 'base-') === 0) {
             if (!in_array($folder, $a)) {
@@ -203,29 +209,48 @@ for ($i = 1; $i < $argc; $i++) {
         }
         continue;
     }
-    
+
     if ($argv[$i] === '--install') {
+      chdir('..');
       $dep = new Dependency(null, 'waxedphp');
       $dep->doInstallScript();
+      chdir('./public');
       continue;
     }
 
     if ($argv[$i] === '--install-all') {
+      chdir('..');
       $a = scandir($cfg->getWaxedPhpDir());
       foreach($a as $name){
         if (strpos($name,'.')===0) continue;
+        echo $name . "\n";
         $dep = new Dependency(null, $name);
         $dep->doInstallScript();
       }
+      chdir('./public');
       continue;
     }
-    
+
     if (strpos($argv[$i],'--install=')===0) {
+      chdir('..');
       $a = explode('=', $argv[$i]);
+      echo $a[1] . "\n";
       $dep = new Dependency(null, $a[1]);
       $dep->doInstallScript();
+      chdir('./public');
       continue;
     }
+
+    if (strpos($argv[$i],'--reset')===0) {
+
+      $d = $cfg->getDataDir();
+      if ((is_file($d . '/uses.json')) && (is_writable($d . '/uses.json'))) {
+        file_put_contents($d . '/uses.json', '{}');
+      } else {
+        echo "File " . $d . '/uses.json' . " not found.\n";
+      }
+
+    };
 
 }
 

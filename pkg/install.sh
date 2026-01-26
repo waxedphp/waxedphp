@@ -1,6 +1,6 @@
 #!/bin/bash
 
-npm install jquery
+npm install jquery@3.7.1
 npm install lodash
 npm install --save-dev css-loader
 npm install --save-dev sass-loader sass webpack
