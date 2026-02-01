@@ -33,10 +33,28 @@ npm install @babel/preset-env --save-dev
     $waxed = new Waxed();
     $waxed->route('/')->configure()->setDevelopment(true);
     $waxed->plugin->uses(explode('-', $usage))->prepare_build();
+
     $cfg = $this->config->getConfig();
     $assets = $cfg['writable_path'];
     if (!is_dir($assets)) mkdir($assets);
     if (!is_dir($assets . '/' . $usage)) mkdir($assets . '/' . $usage);
+
+    $s = "\n";
+    $s.= "import jQuery from 'jquery';\n";
+    //$s.= "console.log(jQuery);\n";
+    $s.= "\n";
+    //$s.= "window.jQuery = jQuery;\n";
+    //$s.= "window.$ = $ = jQuery;\n";
+
+    $s.= "globalThis.$ = jQuery;\n";
+    $s.= "globalThis.jQuery = jQuery;\n";
+
+    $s.= "\n";
+    $s.= "globalThis._ = require('lodash');\n";
+    $s.= file_get_contents($assets . '/' . $usage . '/loader.js');
+    file_put_contents($assets . '/' . $usage . '/loader.js', $s);
+
+
     $cmd = 'npx webpack ';
     $cmd.= '--progress ';
     $cmd.= '--config "' . $this->makeConfig() . '" ';
@@ -45,7 +63,7 @@ npm install @babel/preset-env --save-dev
     $cmd.= '--output-path="' . $assets . '/' . $usage . '/" ';
     $re = [];
     exec($cmd, $re);
-    unlink($assets . '/' . $usage . '/loader.js');
+    //unlink($assets . '/' . $usage . '/loader.js');
     print_r($re);
   }
 
@@ -114,7 +132,8 @@ npm install @babel/preset-env --save-dev
     $s.= "    new MiniCssExtractPlugin(),\n";
     $s.= "    new webpack.ProvidePlugin({\n";
     $s.= '      $: "jquery",'."\n";
-    $s.= '      jQuery: "jquery"'."\n";
+    $s.= '      jQuery: "jquery",'."\n";
+    $s.= '      _: "lodash"'."\n";
     //$s.= '      "window.jQuery": "jquery"'."\n";
     $s.= "    })\n";
     $s.= "  ]\n";

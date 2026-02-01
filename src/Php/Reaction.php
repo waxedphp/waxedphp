@@ -581,7 +581,7 @@ class Reaction {
     }
     return $t;
   }
-  
+
   public function renderBlock($data, $template) {
     $t = $this->base->design->mode('html')->route(explode('/',$template))->GET();
     $mustache=new Mustache($this->getBase());

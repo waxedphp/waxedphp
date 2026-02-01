@@ -130,7 +130,7 @@ class PluginDev extends Plugin {
   * _prepare_build
   *
   * @return void
-  
+
   protected function _prepare_build(): void {
     if (!$this->writablePath) throw new \Exception('Writable path is not set.');
     $plug = implode('-', $this->_uses_);
@@ -158,11 +158,28 @@ class PluginDev extends Plugin {
       mkdir($path);
     };
     $fname = $path . '/loader.js';
-    $s = ''."\n";
+    $s = ''."\n";$i = 0;
     foreach ($this->_uses_ as $pkg) {
-      $s .= 'import "' . $this->getRelativePath($path,$this->dependencies[$pkg]->getPath()) . 'loader.js"'."\n";
+      $i++;
+      $fname2 = $path . '/loader-'.$i.'.js';
+      $f = $this->dependencies[$pkg]->getPath() . '/loader.js';
+      $r = $this->getRelativePath($path,$this->dependencies[$pkg]->getPath());
+      if (is_file($f)) {
+        $c = file_get_contents($f);
+        $c = str_replace('"../', '"' . $r . '../', $c);
+        $c = str_replace('"./', '"' . $r . '', $c);
+        //file_put_contents($fname2, $c);
+        $s.= $c;
+      } else {
+        $c = '/* not found: ' . $f . ' */' . "\n";
+        //file_put_contents($fname2, $c);
+        $s.= $c;
+      }
+      //$s .= 'import "' . $this->getRelativePath($path,$this->dependencies[$pkg]->getPath()) . 'loader.js"'."\n";
+
       //$s .= 'import "' . $this->getRelativePath($path,$this->packagePath) . '/' . $pkg . '/loader.js"'."\n";
     }
+
     $s .= ''."\n";
     file_put_contents($fname, $s);
   }
@@ -356,7 +373,7 @@ class PluginDev extends Plugin {
   * @param string $content
   * @param string $extension
   * @return void
-  
+
   private function _minify(string &$content, string $extension): void {
     $fn = '/dev/null';
     //if ($this->writablePath) {
@@ -603,23 +620,23 @@ class PluginDev extends Plugin {
         $fname3 = realpath(implode(DIRECTORY_SEPARATOR, $script));
         //print_r($this->packagePath);
         //print_r($this->nodeJsPath);
-        
+
         if (strpos($fname1, $this->packagePath)!==0) {
           $fname1 = '';
         };
         if (strpos($fname2, $this->nodeJsPath)!==0) {
           $fname2 = '';
         };
-        
+
         if (strpos($fname3, realpath($this->vendorPath.'/waxed/'.$key.'/pkg/'))!==0) {
           //echo '/' . '* 3: ' . realpath($fname3) . ' ' . realpath($this->vendorPath.'/waxed/'.$key.'/pkg/') . '*' . '/'."\n";
           $fname3 = '';
-          
+
         };
         echo '/' . '* 1: ' . $fname1 . '*' . '/'."\n";
         echo '/' . '* 2: ' . $fname2 . '*' . '/'."\n";
         echo '/' . '* 3: ' . $fname3 . '*' . '/'."\n";
-        
+
         if (($fname1) && (file_exists($fname1))) {
           $s .= file_get_contents($fname1) . "\n";
         } elseif (($fname2) && (file_exists($fname2))) {
@@ -717,7 +734,7 @@ class PluginDev extends Plugin {
     }
     return implode('/', $relPath);
   }
-  
+
   /**
   * get_inside
   *
