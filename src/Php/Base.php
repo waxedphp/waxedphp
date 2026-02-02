@@ -587,12 +587,12 @@ class Base {
     }
     return $this;
   }
-  
+
   public function getMustache() {
     $mustache=new Mustache($this);
     return $mustache;
   }
-  
+
   public function getTemplate(array|string $template) {
     $t = '';
     if (is_array($template)){
@@ -602,6 +602,14 @@ class Base {
       $t = $this->design->mode('html')->route(explode('/',$template))->GET();
     };
     return $t;
+  }
+
+  public function getTemplateFolder(string $s) {
+    $d = $this->design->getDesignPath();
+    if (!is_dir($d)) return '';
+    $d .= '/' . $s;
+    if (!is_dir($d)) return '';
+    return realpath($d);
   }
 
 }
