@@ -41,7 +41,7 @@
             if (typeof(this.o[name])!='undefined') {
               var a = this.o[name]['api'];
               var e = this.o[name]['elm'];
-              if (e &&($.data(e, 'plugin_' + pluginName))) {
+              if (e &&($(e).data('plugin_' + pluginName))) {
                 //console.log('GETAPI-FIND', a);
                 return a;
               } else {
@@ -1046,7 +1046,7 @@
        */
       $(elements.main).find('a.action, button.action,a.waxed-action, button.waxed-action').off().on('click', function(ev){
         var data=$(ev.currentTarget).data();
-        
+
         if(typeof(data.action)=='undefined'){
           return true;
         };
@@ -1686,7 +1686,7 @@
 
       this.trigger(options);
 
-      $(window).bind('hashchange', function() {
+      $(window).on('hashchange', function() {
         that.hashChange(document.location.hash);
       });
 
@@ -2174,7 +2174,7 @@
             if(typeof(opt.url)=='undefined')return this;
             if(typeof(opt.key)=='undefined')return this;
             if(typeof(opt.data)=='undefined')opt.data={action:'load'};
-            $(document).bind('keydown', opt.key, function(){
+            $(document).on('keydown', opt.key, function(){
               that.sendData(opt.data, opt.url);
             });
           break;
@@ -2578,14 +2578,14 @@
 
   $.fn[pluginName] = function ( options ) {
       return this.each(function () {
-          if (!$.data(this, 'plugin_' + pluginName)) {
+          if (!$(this).data('plugin_' + pluginName)) {
               $(this).trigger(pluginName+'-instance-create', this.id);
               var o = new Plugin(this, options);
               //console.log(o);
-              $.data(this, 'plugin_' + pluginName, o.api());
+              $(this).data('plugin_' + pluginName, o.api());
               return o.api();
           } else {
-              var o = $.data(this, 'plugin_' + pluginName);
+              var o = $(this).data('plugin_' + pluginName);
               o.trigger( options );
               return o;
               //return o.api();
