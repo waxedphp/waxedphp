@@ -3,7 +3,7 @@ return [
   'js' => [
     //'/utils/underscore.js',
     //'/base/jquery-3.7.1.min.js',
-    NODE . '/jquery4/dist/jquery.js',
+    NODE . '/jquery/dist/jquery.js',
     //NODE . '/cash-dom/dist/cash.js',
     //'/base/cashquery.js',
     NODE . '/lodash/lodash.js',

@@ -569,7 +569,12 @@ class Reaction {
     $data = array_merge($blocks, $data);
     $t = $mustache->render($t, $data);
     $t = self::str_last_replace('<head>', '<head>' . $this->base->design->BASE(), $t);
-    $t = self::str_last_replace('</head>', $this->base->plugin->CSS() . '</head>', $t);
+    $pos = strpos($t, '<!--[WAXED-STYLE]-->');
+    if($pos !== false) {
+      $t = self::str_last_replace('<!--[WAXED-STYLE]-->', $this->base->plugin->CSS(), $t);
+    } else {
+      $t = self::str_last_replace('</head>', $this->base->plugin->CSS() . '</head>', $t);
+    };
     if ((is_array($template))&&(isset($template['csstext']))) {
       $t = self::str_last_replace('</head>', "\n".'  <style>' ."\n".$template['csstext']."\n".'  </style>'."\n".'</head>', $t);
     };

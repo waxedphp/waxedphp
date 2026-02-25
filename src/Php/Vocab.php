@@ -68,6 +68,14 @@ class Vocab {
     $fname = $this->path . DIRECTORY_SEPARATOR . $this->lang . DIRECTORY_SEPARATOR . $this->name . '.php';
     //print_r($fname);
     if (file_exists($fname)) {
+      $v = include($fname);
+      $this->_vocab_ = $v;
+      $this->_loaded_ = $this->name;
+      return $this;
+    };
+    $fname = $this->path . DIRECTORY_SEPARATOR . $this->name . '.' . $this->lang . '.php';
+    //print_r($fname);
+    if (file_exists($fname)) {
        $v = include($fname);
        $this->_vocab_ = $v;
     };
@@ -99,7 +107,7 @@ class Vocab {
     $RECORD = array_merge($this->_vocab_[$VOCAB], $RECORD);
     return $this;
   }
-  
+
   public function get(?string $name = null, ?string $lang = null): array {
     if ($name) $this->load($name);
     if ($lang) $this->lang($lang);
