@@ -65,6 +65,7 @@ class Vocab {
   private function _load(): object {
     $this->_vocab_ = [];
     //$fname = $this->base->getAppPath() . DIRECTORY_SEPARATOR . 'language' . DIRECTORY_SEPARATOR . $this->name . '.' . $this->lang . '.php';
+    /*
     $fname = $this->path . DIRECTORY_SEPARATOR . $this->lang . DIRECTORY_SEPARATOR . $this->name . '.php';
     //print_r($fname);
     if (file_exists($fname)) {
@@ -73,13 +74,16 @@ class Vocab {
       $this->_loaded_ = $this->name;
       return $this;
     };
-    $fname = $this->path . DIRECTORY_SEPARATOR . $this->name . '.' . $this->lang . '.php';
-    //print_r($fname);
-    if (file_exists($fname)) {
-       $v = include($fname);
-       $this->_vocab_ = $v;
-    };
-    $this->_loaded_ = $this->name;
+    */
+    try {
+      $fname = $this->path . DIRECTORY_SEPARATOR . $this->name . '.' . $this->lang . '.php';
+      //print_r($fname);
+      if (is_file($fname)) {
+         $v = include($fname);
+         $this->_vocab_ = $v;
+      };
+      $this->_loaded_ = $this->name;
+    } catch(\Throwable $e) {}
     return $this;
   }
 
