@@ -207,7 +207,7 @@ class Reaction {
   * @param string $signature
   * @return object
   */
-  function dialog(array $RECORD, string $template = null, int $timeout=0, ?string $class = null, bool $modal = false, string $signature = 'modal'): object {
+  function dialog(array $RECORD, ?string $template = null, int $timeout=0, ?string $class = null, bool $modal = false, string $signature = 'modal'): object {
     $a = new Reactions\Dialog($this->getBase());
     if ($this->picked) {
       $a->pick($this->picked);
@@ -379,7 +379,7 @@ class Reaction {
   * @param int $onTime
   * @return object
   */
-  function load(string $action = null, array $data = [], string $url = null, int $onTime = 0): object {
+  function load(?string $action = null, array $data = [], ?string $url = null, int $onTime = 0): object {
     $a = new Reactions\Load($this->getBase());
     if ($this->picked) {
       //$a->pick($this->picked);

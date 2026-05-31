@@ -2,7 +2,6 @@
 namespace Waxedphp\Waxedphp;
 
 
-
 /*
 
 if (basename(dirname(__FILE__)) == 'Waxed') {
