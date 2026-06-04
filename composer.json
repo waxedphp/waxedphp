@@ -3,7 +3,7 @@
     "description": "Advanced views with mustache.",
     "type": "library",
     "license": "MIT",
-    "version": "0.3.17",
+    "version": "0.3.18",
     "autoload": {
         "psr-4": {
             "Waxedphp\\Waxedphp\\": "src"
@@ -15,8 +15,7 @@
         }
     ],
     "require": {
-      "mustache/mustache": "^3",
-      "scssphp/scssphp": "^2"
+      "mustache/mustache": "^3"
     },
     "bin": ["bin/wax"]
 }
